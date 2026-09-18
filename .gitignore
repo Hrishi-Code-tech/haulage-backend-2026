@@ -1,0 +1,14 @@
+node_modules/
+
+# Environment variables
+.env
+
+# Prisma generated client
+src/generated/
+
+# IDE / Editor
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+prisma/migrations/migration_lock.toml

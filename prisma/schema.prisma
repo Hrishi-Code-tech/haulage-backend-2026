@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+
+enum OrderStatus {
+  PENDING
+  MATCHING
+  NEGOTIATING
+  BOOKED
+  IN_TRANSIT
+  DELIVERED
+  AUDIT_FAILED
+}
+
+model Tenant {
+  id        String          @id @default(uuid())
+  name      String
+  orders    OrderLoad[]
+  carriers  CarrierDriver[]
+  createdAt DateTime        @default(now())
+}
+
+model CarrierDriver {
+  id                 String   @id @default(uuid())
+  tenantId           String
+  tenant             Tenant   @relation(fields: [tenantId], references: [id])
+  name               String
+  phone              String   @unique
+  vehicleCapacityKg  Float
+  languagePreference String
+  createdAt          DateTime @default(now())
+}
+
+model OrderLoad {
+  id              String      @id @default(uuid())
+  tenantId        String
+  tenant          Tenant      @relation(fields: [tenantId], references: [id])
+  origin          String
+  destination     String
+  weightKg        Float
+  targetRate      Float
+  status          OrderStatus @default(PENDING)
+  
+  telemetryLogs   TelemetryLog[]
+  negotiationLog  AiNegotiationLog?
+  invoice         SettlementInvoice?
+
+  createdAt       DateTime    @default(now())
+}
+
+model TelemetryLog {
+  id          String    @id @default(uuid())
+  orderId     String
+  order       OrderLoad @relation(fields: [orderId], references: [id])
+  latitude    Float
+  longitude   Float
+  timestamp   DateTime  @default(now())
+  
+  @@index([orderId])
+}
+
+model AiNegotiationLog {
+  id               String    @id @default(uuid())
+  orderId          String    @unique
+  order            OrderLoad @relation(fields: [orderId], references: [id])
+  transcript       String?   @db.Text
+  agreedRate       Float
+  agentDurationSec Int
+  createdAt        DateTime  @default(now())
+}
+
+model SettlementInvoice {
+  id               String    @id @default(uuid())
+  orderId          String    @unique
+  order            OrderLoad @relation(fields: [orderId], references: [id])
+  billedAmount     Float
+  aiAuditStatus    String    
+  discrepancyFlags String[]  
+  createdAt        DateTime  @default(now())
+}

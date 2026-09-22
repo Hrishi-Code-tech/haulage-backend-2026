@@ -1,0 +1,21 @@
+FROM node:20-alpine
+
+WORKDIR /usr/src/app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy Prisma schema and generate client
+COPY prisma ./prisma/
+RUN npx prisma generate
+
+# Copy the rest of the application
+COPY . .
+
+EXPOSE 3000
+
+# Default command (overridden by docker-compose for dev)
+CMD ["node", "src/server.js"]

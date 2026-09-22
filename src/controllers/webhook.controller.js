@@ -12,7 +12,7 @@ export const ingestEmail = async (req, res) => {
       .status(201)
       .json(new ApiResponse(201, "Load data ingested successfully", newOrder));
   } catch (error) {
-    new ApiError(500, "Failed to ingest load data", error);
+    throw new ApiError(500, "Failed to ingest load data", [error.message]);
   }
 };
 
@@ -31,26 +31,21 @@ export const handleVoiceNegotiation = async (req, res) => {
     res
       .status(200)
       .json(
-        new ApiResponse(
-          200,
-          "Negotiation logged and order updated successfully",
-        ),
+        new ApiResponse(200, "Negotiation logged and order updated successfully"),
       );
   } catch (error) {
-    new ApiError(500, "Failed to log negotiation and update order", error);
+    throw new ApiError(500, "Failed to log negotiation and update order", [error.message]);
   }
 };
 
 export const handleWarehouseVision = async (req, res) => {
   const { orderId, passedInspection, complianceNotes } = req.body;
   // In semester 2, this will update the invoice/order status. For now, acknowledge.
-  res.status(200).json(
-    new ApiResponse(200, "Warehouse vision data acknowledged", {
+  res.status(200).json(new ApiResponse(200, "Warehouse vision data acknowledged", {
       acknowledged: true,
       passedInspection,
       complianceNotes,
-    }),
-  );
+    }));
 };
 
 export const handleInvoiceAudit = async (req, res) => {
@@ -63,6 +58,6 @@ export const handleInvoiceAudit = async (req, res) => {
       .status(200)
       .json(new ApiResponse(200, "Audit data logged successfully"));
   } catch (error) {
-    new ApiError(500, "Failed to log audit", error);
+    throw new ApiError(500, "Failed to log audit", [error.message]);
   }
 };

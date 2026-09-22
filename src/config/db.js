@@ -1,7 +1,9 @@
 // src/config/db.js
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '../generated/client/index.js';
 
-// Export a single instance to be shared across all controllers
 const prisma = new PrismaClient();
+
+export const connectDatabase = () => prisma.$connect();
+export const disconnectDatabase = () => prisma.$disconnect();
 
 export default prisma;

@@ -2,8 +2,11 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const ENV = {
-  PORT: process.env.PORT || 8001,
+  PORT: Number(process.env.PORT || 3000),
   DATABASE_URL: process.env.DATABASE_URL,
-  NODE_ENV: process.env.NODE_ENV,
+  REDIS_URL: process.env.REDIS_URL || "redis://localhost:6379",
+  ROUTING_ENGINE_URL: process.env.ROUTING_ENGINE_URL || "http://localhost:8000",
+  ROUTING_ENGINE_TIMEOUT_MS: Number(process.env.ROUTING_ENGINE_TIMEOUT_MS || 10_000),
+  ROUTE_STATE_TTL_SECONDS: Number(process.env.ROUTE_STATE_TTL_SECONDS || 86_400),
+  NODE_ENV: process.env.NODE_ENV || "development",
 };
-console.log("ENV LOADED:", ENV);

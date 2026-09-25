@@ -11,7 +11,6 @@ import authRoutes from './routes/auth.routes.js';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-
 const app = express();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

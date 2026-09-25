@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haulage - Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Outfit:wght@400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <!-- Ambient Background -->
+  <div class="ambient-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <nav class="dashboard-nav">
+    <div class="nav-content">
+      <div class="logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 8H8V16H4V8Z" fill="var(--amber)"/>
+          <path d="M10 5H14V19H10V5Z" fill="var(--amber)"/>
+          <path d="M16 11H20V19H16V11Z" fill="var(--amber)"/>
+        </svg>
+        <span>Haulage</span>
+      </div>
+      <div class="nav-actions">
+        <span class="user-greeting" id="user-greeting">Welcome back</span>
+        <button id="logout-btn" class="logout-btn">Log out</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="dashboard-main">
+    <header class="dashboard-header">
+      <h1>Control Tower</h1>
+      <p>Manage routing, telemetry, and media uploads.</p>
+    </header>
+
+    <div class="dashboard-grid">
+      <!-- Routing & Optimization -->
+      <section class="card route-card">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 3v18h18M9 9l5-5 7 7"/>
+            </svg>
+          </div>
+          <h2>Routing Optimization</h2>
+        </div>
+        <div class="card-body">
+          <p>Trigger the internal routing engine to find optimal matches for a load.</p>
+          <div class="form-group">
+            <label>Load Weight (kg)</label>
+            <input type="number" id="load-weight" value="25000">
+          </div>
+          <button id="btn-optimize" class="primary-btn">Run Optimization <span class="shine"></span></button>
+          <div id="optimize-result" class="result-box"></div>
+        </div>
+      </section>
+
+      <!-- Media Uploads -->
+      <section class="card media-card">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+            </svg>
+          </div>
+          <h2>Document & Media</h2>
+        </div>
+        <div class="card-body">
+          <p>Generate S3 pre-signed URLs for secure document ingestion.</p>
+          <div class="upload-actions">
+            <button id="btn-invoice" class="secondary-btn">Invoice URL</button>
+            <button id="btn-pallet" class="secondary-btn">Pallet Photo URL</button>
+          </div>
+          <div id="media-result" class="result-box"></div>
+        </div>
+      </section>
+
+      <!-- Telemetry Stream -->
+      <section class="card telemetry-card">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <h2>Telemetry Stream</h2>
+        </div>
+        <div class="card-body">
+          <p>Ingest real-time truck location data.</p>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Lat</label>
+              <input type="number" id="lat-input" value="34.0522">
+            </div>
+            <div class="form-group">
+              <label>Lng</label>
+              <input type="number" id="lng-input" value="-118.2437">
+            </div>
+          </div>
+          <button id="btn-telemetry" class="secondary-btn">Send Ping</button>
+          <div id="telemetry-result" class="result-box"></div>
+        </div>
+      </section>
+
+      <!-- Webhooks Log -->
+      <section class="card webhook-card">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+            </svg>
+          </div>
+          <h2>Webhook Events</h2>
+        </div>
+        <div class="card-body">
+          <p>Simulate incoming partner webhooks.</p>
+          <button id="btn-voice" class="secondary-btn">Simulate AI Voice Booking</button>
+          <div id="webhook-result" class="result-box"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

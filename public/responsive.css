@@ -1,0 +1,50 @@
+/* ─── Auth Page Responsive ─── */
+
+@media (max-width: 900px) {
+  .auth-shell { grid-template-columns: minmax(0, 1fr) minmax(350px, 44%); }
+  .hero-copy { padding-left: 32px; padding-right: 32px; }
+  .auth-side { padding-left: 32px; padding-right: 32px; }
+  .hero-message h1 { font-size: clamp(44px, 6vw, 68px); }
+}
+
+@media (max-width: 767px) {
+  .auth-shell { display: block; }
+  .hero-stage { height: 270px; min-height: 0; }
+  .hero-copy { padding: 22px 20px; }
+  .hero-message { margin: 75px 0 0; }
+  .hero-message h1 { font-size: 38px; letter-spacing: -2px; }
+  .hero-message > p:last-child { display: none; }
+  .hero-caption { position: absolute; bottom: 20px; left: 20px; font-size: 8px; }
+  .hero-stage::after { height: 50%; }
+  .auth-side { min-height: calc(100vh - 270px); padding: 19px 24px 22px; }
+  .auth-topline { font-size: 8px; }
+  .auth-card {
+    padding: 28px 20px 22px;
+    margin: 0 auto;
+    border-radius: 12px;
+  }
+  .auth-heading h2 { font-size: 25px; }
+  .auth-tabs { margin-top: 31px; }
+  .auth-footer { font-size: 8px; }
+  .scene-fallback { display: none; }
+  .hero-orbs { display: none; }
+  .motion-toggle { right: 16px; bottom: 16px; padding: 7px 10px; font-size: 8px; }
+}
+
+@media (max-width: 420px) {
+  .hero-stage { height: 244px; }
+  .hero-message { margin-top: 62px; }
+  .hero-message h1 { font-size: 34px; }
+  .auth-side { min-height: calc(100vh - 244px); padding-left: 20px; padding-right: 20px; }
+  .auth-card { padding-top: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene-wrap { display: block; }
+  .scene-fallback { display: none; }
+  .hero-orbs { display: none; }
+}
+
+/* ─── Auth mode field visibility ─── */
+.auth-card:not(.is-signup) .signup-only { display: none !important; }
+.auth-card.is-signup .check-row.signup-only { display: flex; }

@@ -15,6 +15,28 @@ datasource db {
   url = env("DATABASE_URL")
 }
 
+model AuthUser {
+  id           String        @id @default(uuid())
+  name         String
+  companyName  String
+  email        String        @unique
+  passwordHash String
+  sessions     AuthSession[]
+  createdAt    DateTime      @default(now())
+}
+
+model AuthSession {
+  id        String   @id @default(uuid())
+  tokenHash String   @unique
+  userId    String
+  user      AuthUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
 
 enum OrderStatus {
   PENDING

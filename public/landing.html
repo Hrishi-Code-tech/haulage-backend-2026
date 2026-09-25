@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101820">
+  <meta name="description" content="Haulage — the freight operating system. One intelligent layer for loads, drivers, and every mile between them.">
+  <title>Haulage | Freight, in motion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/landing.css">
+  <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.176.0/build/three.module.js" } }</script>
+</head>
+<body>
+  <!-- Ambient gradient orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <header class="site-nav" id="site-nav">
+    <a class="brand" href="/"><span class="brand-mark"><i></i><i></i><i></i></span><span>haulage</span></a>
+    <nav aria-label="Main navigation"><a href="#platform">Platform</a><a href="#network">Network</a><a href="#company">Company</a></nav>
+    <a class="nav-login" href="/login">Log in <span>↗</span></a>
+  </header>
+
+  <main>
+    <section class="landing-hero">
+      <div class="hero-grid"></div>
+      <div class="hero-content">
+        <p class="eyebrow"><span class="live-dot"></span> The freight operating system</p>
+        <h1>Keep the<br><em>world moving.</em></h1>
+        <p class="hero-lede">One intelligent layer for loads, drivers, and every mile between them.</p>
+        <div class="hero-actions"><a class="primary-cta" href="/login"><span class="cta-glow"></span>Enter control tower <span class="cta-arrow">→</span></a><a class="quiet-cta" href="#platform">Explore the platform <span>↓</span></a></div>
+      </div>
+      <div class="landing-scene" id="landing-scene" aria-label="Animated haulage truck on a highway"></div>
+      <div class="scene-status"><span class="live-dot"></span><span>Live route simulation</span><button id="landing-motion" type="button">Pause</button></div>
+      <div class="hero-foot"><span>ROUTE / 01</span><span class="rule"></span><span>ROTTERDAM — BERLIN</span><span class="hero-scroll">Scroll to move <b>↓</b></span></div>
+    </section>
+
+    <section class="signal-strip" id="network" data-reveal>
+      <div><span class="signal-number" data-count="24">0</span><span>active loads</span></div>
+      <div><span class="signal-number" data-count="96.8" data-suffix="%">0</span><span>on-time delivery</span></div>
+      <div><span class="signal-number" data-count="18" data-suffix="k">0</span><span>miles tracked today</span></div>
+      <div><span class="signal-number amber" data-count="01">0</span><span>control tower</span></div>
+    </section>
+
+    <section class="platform-section" id="platform">
+      <div class="section-intro" data-reveal>
+        <p class="eyebrow">Built for the whole journey</p>
+        <h2>Clarity at<br><em>every mile.</em></h2>
+      </div>
+      <div class="feature-grid">
+        <article data-reveal data-reveal-delay="0">
+          <span class="feature-index">01 / Dispatch</span>
+          <h3>See the network<br>as it moves.</h3>
+          <p>Live telemetry turns a thousand moving parts into one calm, actionable view.</p>
+          <a href="/login">Open the tower <span>↗</span></a>
+        </article>
+        <article data-reveal data-reveal-delay="1">
+          <span class="feature-index">02 / Intelligence</span>
+          <h3>Route around<br>the unexpected.</h3>
+          <p>Closed-loop matching responds to delays before they become missed deliveries.</p>
+          <a href="/login">Meet the system <span>↗</span></a>
+        </article>
+        <article data-reveal data-reveal-delay="2">
+          <span class="feature-index">03 / Trust</span>
+          <h3>Every handoff,<br>accounted for.</h3>
+          <p>From invoice to arrival, your operation keeps a clean, connected record.</p>
+          <a href="/login">Start moving <span>↗</span></a>
+        </article>
+      </div>
+    </section>
+
+    <section class="social-proof" data-reveal>
+      <p class="eyebrow">Trusted by operators across the network</p>
+      <div class="proof-grid">
+        <div class="proof-card">
+          <blockquote>"Haulage cut our dispatch time in half. We see every truck, every load, in real time."</blockquote>
+          <div class="proof-author"><div class="proof-avatar">JK</div><div><strong>James Keller</strong><span>Ops Director, NorthStar Freight</span></div></div>
+        </div>
+        <div class="proof-card">
+          <blockquote>"The intelligence layer saved us from three late deliveries last week alone."</blockquote>
+          <div class="proof-author"><div class="proof-avatar">SR</div><div><strong>Sarah Reed</strong><span>Fleet Manager, Apex Logistics</span></div></div>
+        </div>
+        <div class="proof-card">
+          <blockquote>"One dashboard, full clarity. We stopped guessing and started operating."</blockquote>
+          <div class="proof-author"><div class="proof-avatar">MT</div><div><strong>Marcus Torres</strong><span>CEO, Meridian Transport</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing-section" id="company" data-reveal>
+      <p class="eyebrow">The road ahead</p>
+      <h2>Good freight<br>feels <em>inevitable.</em></h2>
+      <a class="primary-cta" href="/login"><span class="cta-glow"></span>Build your network <span class="cta-arrow">→</span></a>
+    </section>
+  </main>
+
+  <footer class="site-footer"><a class="brand" href="/"><span class="brand-mark"><i></i><i></i><i></i></span><span>haulage</span></a><span>© 2026 Haulage Systems</span><span>Freight, in motion.</span></footer>
+  <script type="module" src="/landing.js"></script>
+</body>
+</html>

@@ -41,3 +41,12 @@ export const ingestTelemetry = async (req , res )=>
         throw new ApiError(500, "Error ingesting telemetry data", [error.message]);
     }
 }
+
+export const getTelemetryHistory = async (req, res) => {
+    const { loadId } = req.params;
+    const history = await prisma.telemetryLog.findMany({
+        where: { orderId: loadId },
+        orderBy: { timestamp: 'desc' }
+    });
+    res.status(200).json(new ApiResponse(200, 'Telemetry history fetched', history));
+};

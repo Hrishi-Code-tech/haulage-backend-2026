@@ -1,0 +1,265 @@
+/**
+ * Orders table styles
+ */
+
+.container {
+  background: var(--glass-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(12px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.controls button {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.controls button:hover,
+.controls button.active {
+  background: rgba(245, 163, 58, 0.1);
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.table thead {
+  background: transparent;
+}
+
+.table th {
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+  font-weight: 500;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.table td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.row {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.row:hover {
+  background: rgba(245, 163, 58, 0.05);
+}
+
+.route {
+  font-weight: 500;
+}
+
+.route div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.origin,
+.destination {
+  white-space: nowrap;
+}
+
+.arrow {
+  color: var(--muted);
+  opacity: 0.6;
+}
+
+.status {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.date {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.action {
+  color: var(--amber);
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.row:hover .action {
+  opacity: 1;
+}
+
+/* Loading state - Skeleton */
+.skeleton {
+  padding: 1.5rem;
+}
+
+.skeletonRow {
+  height: 50px;
+  background: linear-gradient(
+    90deg,
+    rgba(245, 163, 58, 0.05) 0%,
+    rgba(245, 163, 58, 0.1) 50%,
+    rgba(245, 163, 58, 0.05) 100%
+  );
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.error {
+  padding: 4rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.errorIcon {
+  width: 48px;
+  height: 48px;
+  color: #ef4444;
+  margin-bottom: 0.5rem;
+  opacity: 0.8;
+}
+
+.error p {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 500;
+  font-size: 1.125rem;
+}
+
+.errorDetail {
+  font-size: 0.875rem !important;
+  color: var(--muted) !important;
+  font-weight: 400 !important;
+}
+
+/* Empty state */
+.empty {
+  padding: 5rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.emptyIconWrap {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--line);
+}
+
+.emptyIcon {
+  width: 28px;
+  height: 28px;
+  color: var(--muted);
+}
+
+.emptyText {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.emptyDetail {
+  margin: 0.5rem 0 0 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .table th,
+  .table td {
+    padding: 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .route div {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .arrow {
+    display: none;
+  }
+}

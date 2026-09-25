@@ -1,7 +1,7 @@
 // src/app.js
 import express from 'express';
-import {webhookRoutes} from './routes/webhook.routes.js';
-import {internalRoutes} from './routes/internal.routes.js';
+import {webhookRoutes} from './src/routes/webhook.routes.js';
+import {internalRoutes} from './src/routes/internal.routes.js';
 
 const app = express();
 

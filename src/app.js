@@ -28,6 +28,7 @@ app.get('/health', (req, res) => {
 });
 
 import ordersRoutes from './routes/orders.routes.js';
+import aiRoutes from './routes/ai.routes.js';
 
 // Mount route groups
 app.use('/api/webhooks', webhookRoutes);
@@ -36,6 +37,7 @@ app.use('/api/telemetry', telemetryRoutes);
 app.use('/api/media', mediaRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/orders', ordersRoutes);
+app.use('/api/ai', aiRoutes);
 
 app.get('/', (req, res) => {
 	res.sendFile(path.join(publicDirectory, 'landing.html'));

@@ -16,6 +16,8 @@ services:
       DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}?schema=public
       REDIS_URL: redis://redis:6379
       ROUTING_ENGINE_URL: http://routing-engine:8000
+      AI_SERVICE_URL: http://ai-service:8000
+      AI_SERVICE_TIMEOUT_MS: 60000
     depends_on:
       postgres:
         condition: service_started
@@ -25,7 +27,35 @@ services:
         condition: service_started
       routing-engine:
         condition: service_started
+      ai-service:
+        condition: service_started
     command: sh -c "npx prisma generate && npx prisma migrate deploy && npm run dev"
+
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    container_name: haulage-ai-service
+    ports:
+      - "${AI_SERVICE_PORT:-8002}:8000"
+    volumes:
+      - ./ai-service:/app
+      - ai_models:/app/models
+    env_file:
+      - .env
+    environment:
+      QDRANT_URL: http://qdrant:6333
+      REDIS_URL: redis://redis:6379
+      DATABASE_URL: postgresql+asyncpg://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}
+      NODE_BACKEND_URL: http://api:3000
+    depends_on:
+      qdrant:
+        condition: service_started
+      postgres:
+        condition: service_started
+      redis:
+        condition: service_started
+    restart: unless-stopped
 
   routing-engine:
     build:
@@ -90,3 +120,4 @@ volumes:
   postgres_data:
   redis_data:
   qdrant_data:
+  ai_models:

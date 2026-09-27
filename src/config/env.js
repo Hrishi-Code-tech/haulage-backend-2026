@@ -9,4 +9,6 @@ export const ENV = {
   ROUTING_ENGINE_TIMEOUT_MS: Number(process.env.ROUTING_ENGINE_TIMEOUT_MS || 10_000),
   ROUTE_STATE_TTL_SECONDS: Number(process.env.ROUTE_STATE_TTL_SECONDS || 86_400),
   NODE_ENV: process.env.NODE_ENV || "development",
+  AI_SERVICE_URL: process.env.AI_SERVICE_URL || "http://localhost:8002",
+  AI_SERVICE_TIMEOUT_MS: Number(process.env.AI_SERVICE_TIMEOUT_MS || 60_000),
 };

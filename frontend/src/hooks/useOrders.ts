@@ -6,6 +6,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { ordersApi, OrderLoad, OrderStatus } from '@/api/orders.api';
+import { mockLoads } from '@/mock/mockData';
 
 export interface UseOrdersReturn {
   orders: OrderLoad[];
@@ -24,32 +25,17 @@ export function useOrders(autoRefresh = false): UseOrdersReturn {
   const [error, setError] = useState<string | null>(null);
 
   const fetchOrders = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      const data = await ordersApi.getOrders();
-      setOrders(data);
-    } catch (err: any) {
-      const message = err.message || 'Failed to load orders';
-      setError(message);
-      console.error('Orders fetch error:', err);
-    } finally {
-      setIsLoading(false);
-    }
+    setIsLoading(true);
+    setError(null);
+    // Simulate slight network delay if needed, but we can just set it immediately
+    setOrders(mockLoads as any[]); 
+    setIsLoading(false);
   }, []);
 
   // Initial fetch
   useEffect(() => {
     fetchOrders();
   }, [fetchOrders]);
-
-  // Optional: Set up auto-refresh for real-time updates
-  useEffect(() => {
-    if (!autoRefresh) return;
-
-    const interval = setInterval(fetchOrders, 5000); // Refresh every 5 seconds
-    return () => clearInterval(interval);
-  }, [autoRefresh, fetchOrders]);
 
   const selectOrder = (order: OrderLoad | null) => {
     setSelectedOrder(order);

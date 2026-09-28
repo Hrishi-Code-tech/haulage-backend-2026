@@ -1,5 +1,5 @@
 // src/config/db.js
-import { PrismaClient } from '../generated/client/index.js';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 

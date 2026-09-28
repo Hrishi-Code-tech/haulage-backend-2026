@@ -12,7 +12,7 @@ interface MetricsCardProps {
   label: string;
   value: number | string;
   suffix?: string;
-  icon?: string;
+  icon?: React.ReactNode;
   trend?: number; // percentage change
   loading?: boolean;
 }
@@ -21,35 +21,11 @@ export function MetricsCard({
   label,
   value,
   suffix = '',
-  icon = '📊',
+  icon,
   trend,
   loading = false,
 }: MetricsCardProps) {
-  const [displayValue, setDisplayValue] = useState(0);
-
-  // Animate number counting
-  useEffect(() => {
-    if (typeof value !== 'number' || loading) return;
-
-    let start = 0;
-    const end = value;
-    const duration = 800; // ms
-    const increment = end / (duration / 16);
-
-    const timer = setInterval(() => {
-      start += increment;
-      if (start >= end) {
-        setDisplayValue(end);
-        clearInterval(timer);
-      } else {
-        setDisplayValue(Math.floor(start));
-      }
-    }, 16);
-
-    return () => clearInterval(timer);
-  }, [value, loading]);
-
-  const finalValue = typeof value === 'string' ? value : `${displayValue}${suffix}`;
+  const finalValue = typeof value === 'string' ? value : `${value}${suffix}`;
 
   if (loading) {
     return (

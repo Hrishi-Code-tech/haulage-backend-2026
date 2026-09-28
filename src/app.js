@@ -21,7 +21,6 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json());
-app.use(express.static(publicDirectory, {index: false}));
 
 app.get('/health', (req, res) => {
 	res.status(200).json(new ApiResponse(200, 'Service is healthy'));
@@ -36,14 +35,6 @@ app.use('/api/telemetry', telemetryRoutes);
 app.use('/api/media', mediaRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/orders', ordersRoutes);
-
-app.get('/', (req, res) => {
-	res.sendFile(path.join(publicDirectory, 'landing.html'));
-});
-
-app.get('/login', (req, res) => {
-	res.sendFile(path.join(publicDirectory, 'index.html'));
-});
 
 app.use((req, res, next) => {
 	next(new ApiError(404, `Route not found: ${req.method} ${req.originalUrl}`));

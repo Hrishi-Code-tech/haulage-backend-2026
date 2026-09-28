@@ -61,7 +61,6 @@ services:
 
   postgres:
     image: postgres:16-alpine
-    restart: always
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -74,6 +73,8 @@ services:
   redis:
     image: redis:7-alpine
     container_name: haulage-redis
+    ports:
+      - "6379:6379"
     volumes:
       - redis_data:/data
 
@@ -85,6 +86,23 @@ services:
       - "${QDRANT_GRPC_PORT:-6336}:6334"
     volumes:
       - qdrant_data:/qdrant/storage
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: haulage-frontend
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:3000/api
+    depends_on:
+      - api
 
 volumes:
   postgres_data:

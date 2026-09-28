@@ -1,0 +1,113 @@
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  background: var(--glass-bg);
+  border-right: 1px solid var(--line);
+  backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  padding: 2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brandMark {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 20px;
+}
+
+.brandMark i {
+  width: 4px;
+  display: block;
+  background: var(--amber);
+  border-radius: 1px;
+}
+
+.brandMark i:nth-child(1) { height: 9px; opacity: 0.7; }
+.brandMark i:nth-child(2) { height: 15px; }
+.brandMark i:nth-child(3) { height: 20px; opacity: 0.8; }
+
+.nav {
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.75rem 1rem;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  border-radius: var(--radius);
+  transition: all 0.2s;
+}
+
+.navLink:hover {
+  background: rgba(245, 163, 58, 0.08);
+  color: #fff;
+}
+
+.navLink:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(245, 163, 58, 0.4);
+}
+
+.navLink.active {
+  background: rgba(245, 163, 58, 0.15);
+  color: var(--amber);
+  font-weight: 500;
+}
+
+.navIcon {
+  width: 18px;
+  height: 18px;
+  opacity: 0.8;
+}
+
+.navLink.active .navIcon {
+  opacity: 1;
+}
+
+.devOpsSection {
+  padding: 1.5rem 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.devOpsLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.75rem 1rem;
+  color: #a78bfa;
+  background: rgba(167, 139, 250, 0.1);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.devOpsLink:hover {
+  background: rgba(167, 139, 250, 0.15);
+  border-color: rgba(167, 139, 250, 0.4);
+  color: #c4b5fd;
+}

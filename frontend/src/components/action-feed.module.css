@@ -1,0 +1,137 @@
+.feedContainer {
+  background: var(--glass-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.badge {
+  background: rgba(245, 163, 58, 0.15);
+  color: var(--amber);
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.item {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(229, 235, 226, 0.05);
+  display: flex;
+  gap: 1rem;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.item:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.iconWrapper {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.itemContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.itemHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.25rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.time {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  white-space: nowrap;
+}
+
+.desc {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.meta {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  font-family: var(--mono);
+}
+
+.loadId {
+  color: #a6aaa3;
+}
+
+.status {
+  font-weight: 500;
+}
+
+/* Event Types */
+.typeInfo .iconWrapper {
+  background: rgba(59, 130, 246, 0.1);
+  color: #60a5fa;
+}
+.typeWarning .iconWrapper {
+  background: rgba(245, 163, 58, 0.1);
+  color: var(--amber);
+}
+.typeSuccess .iconWrapper {
+  background: rgba(16, 185, 129, 0.1);
+  color: #34d399;
+}
+.typeCritical .iconWrapper {
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+}
+
+.statusInfo { color: #60a5fa; }
+.statusWarning { color: var(--amber); }
+.statusSuccess { color: #34d399; }
+.statusCritical { color: #f87171; }

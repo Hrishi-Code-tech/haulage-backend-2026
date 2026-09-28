@@ -6,6 +6,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { telemetryApi, TelemetryPoint } from '@/api/telemetry.api';
+import { mockLoads } from '@/mock/mockData';
 
 export interface UseTelemetryReturn {
   position: TelemetryPoint | null;
@@ -28,38 +29,32 @@ export function useTelemetry(loadId: string | null): UseTelemetryReturn {
       return;
     }
 
-    try {
-      setIsLoading(true);
-      setError(null);
+    setIsLoading(true);
+    setError(null);
 
-      const [pos, hist] = await Promise.all([
-        telemetryApi.getCurrentPosition(loadId),
-        telemetryApi.getTelemetryHistory(loadId),
-      ]);
-
-      setPosition(pos);
-      setHistory(hist);
-    } catch (err: any) {
-      const message = err.message || 'Failed to load telemetry';
-      setError(message);
-      console.error('Telemetry fetch error:', err);
-    } finally {
-      setIsLoading(false);
+    const load = mockLoads.find(l => l.id === loadId);
+    if (load && load.lat && load.lng) {
+      setPosition({
+        id: load.id,
+        lat: load.lat,
+        lng: load.lng,
+        speed: 60,
+        heading: 90,
+        timestamp: new Date().toISOString()
+      });
+      setHistory([]);
+    } else {
+      setPosition(null);
+      setHistory([]);
     }
+    
+    setIsLoading(false);
   }, [loadId]);
 
   // Fetch when loadId changes
   useEffect(() => {
     fetchTelemetry();
   }, [fetchTelemetry]);
-
-  // Auto-refresh every 5 seconds for real-time updates
-  useEffect(() => {
-    if (!loadId) return;
-
-    const interval = setInterval(fetchTelemetry, 5000);
-    return () => clearInterval(interval);
-  }, [loadId, fetchTelemetry]);
 
   return {
     position,

@@ -8,6 +8,7 @@ from rag.qdrant_store import ensure_collection
 from rag.ingestion import rebuild_bm25_from_qdrant, ingest_document
 from rag.routes import router as rag_router
 from ingestion.routes import router as ingestion_router
+from agent.routes import router as agent_router
 from seed import seed_penalty_policies
 
 
@@ -63,6 +64,7 @@ app.add_middleware(
 # Mount routers
 app.include_router(rag_router)
 app.include_router(ingestion_router)
+app.include_router(agent_router)
 
 
 @app.get("/health")

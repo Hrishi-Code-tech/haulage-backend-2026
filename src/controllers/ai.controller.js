@@ -192,3 +192,58 @@ export const ingestEmailAi = async (req, res) => {
     raw_email_snippet: result.raw_email_snippet,
   });
 };
+
+/**
+ * Stream LangGraph multi-agent execution events via Server-Sent Events (SSE)
+ * POST /api/ai/graph/stream
+ */
+export const streamGraphExecution = async (req, res) => {
+  const { email_text, invoice_amount } = req.body || {};
+  if (!email_text || typeof email_text !== 'string' || email_text.trim().length < 5) {
+    throw new ApiError(400, 'email_text is required and must be at least 5 characters');
+  }
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), ENV.AI_SERVICE_TIMEOUT_MS);
+
+  try {
+    const upstream = await fetch(`${ENV.AI_SERVICE_URL}/graph/stream`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email_text, invoice_amount }),
+      signal: controller.signal,
+    });
+
+    if (!upstream.ok) {
+      const errorData = await upstream.json().catch(() => ({}));
+      throw new ApiError(
+        upstream.status === 422 ? 422 : 502,
+        errorData.detail || 'AI graph service error'
+      );
+    }
+
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.setHeader('X-Accel-Buffering', 'no');
+
+    const reader = upstream.body.getReader();
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        res.write(value);
+      }
+    } finally {
+      res.end();
+    }
+  } catch (error) {
+    if (error instanceof ApiError) throw error;
+    if (error.name === 'AbortError') {
+      throw new ApiError(504, 'AI graph stream request timed out');
+    }
+    throw new ApiError(502, 'AI graph service unavailable', [error.message]);
+  } finally {
+    clearTimeout(timeout);
+  }
+};

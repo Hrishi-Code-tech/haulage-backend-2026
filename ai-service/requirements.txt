@@ -1,0 +1,35 @@
+# AI Service dependencies
+
+# Framework
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.0
+pydantic-settings==2.7.0
+
+# RAG — Dense Embeddings (all-MiniLM-L6-v2 = ~90MB, fast to download)
+sentence-transformers==3.4.1
+
+# RAG — Qdrant vector store
+qdrant-client==1.13.2
+
+# RAG — BM25 keyword retrieval (pure Python, no extra deps)
+rank-bm25==0.2.2
+
+# HTTP client (for inter-service calls and Ollama SLM)
+httpx==0.28.1
+
+# Async utilities
+anyio==4.7.0
+
+# LangGraph — Feature 3
+langgraph==0.2.73
+langchain-core==0.3.29
+
+# Postgres read access for agent context — Feature 3
+asyncpg==0.30.0
+
+# Multipart file uploads
+python-multipart==0.0.20
+
+# Text utilities
+nltk==3.9.1

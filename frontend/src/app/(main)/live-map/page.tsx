@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { mockLoads } from '@/mock/mockData';
 import { TelemetryMap } from '@/components/telemetry-map';
-import styles from '../../dashboard/dashboard.module.css';
+import styles from '../layout.module.css';
 
 export default function LiveMapPage() {
   const searchParams = useSearchParams();

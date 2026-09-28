@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import styles from '../../dashboard/dashboard.module.css';
+import styles from '../layout.module.css';
 
 export default function SettingsPage() {
   return (

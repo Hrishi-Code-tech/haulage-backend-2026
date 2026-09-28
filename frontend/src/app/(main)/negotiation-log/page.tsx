@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { mockNegotiations, Negotiation } from '@/mock/mockData';
-import styles from '../../dashboard/dashboard.module.css';
+import styles from '../layout.module.css';
 
 export default function NegotiationLogPage() {
   const [selectedNeg, setSelectedNeg] = useState<Negotiation | null>(mockNegotiations[0] || null);

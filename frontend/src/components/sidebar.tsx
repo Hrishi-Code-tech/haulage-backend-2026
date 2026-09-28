@@ -10,7 +10,7 @@ export function Sidebar() {
   const pathname = usePathname();
 
   const navItems = [
-    { name: 'Control Tower', path: '/control-tower', icon: <TowerControl className={styles.navIcon} /> },
+    { name: 'Control Tower', path: '/dashboard', icon: <TowerControl className={styles.navIcon} /> },
     { name: 'Loads', path: '/loads', icon: <Truck className={styles.navIcon} /> },
     { name: 'Live Map', path: '/live-map', icon: <MapIcon className={styles.navIcon} /> },
     { name: 'AI Negotiation Log', path: '/negotiation-log', icon: <ScrollText className={styles.navIcon} /> },

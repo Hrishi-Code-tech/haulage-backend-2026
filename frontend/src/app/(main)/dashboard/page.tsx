@@ -9,7 +9,7 @@ import { ActionFeed } from '@/components/action-feed';
 import { OrderDetail } from '@/components/order-detail';
 import { motion } from 'framer-motion';
 import { Truck, Scale, CircleDollarSign, CheckCircle2 } from 'lucide-react';
-import styles from '../../dashboard/dashboard.module.css';
+import styles from '../layout.module.css';
 
 export default function ControlTower() {
   const { orders, selectedOrder, selectOrder, isLoading: ordersLoading } = useOrders(false);

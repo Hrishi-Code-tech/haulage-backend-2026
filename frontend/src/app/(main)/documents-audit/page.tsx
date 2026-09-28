@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { mockInvoices, Invoice } from '@/mock/mockData';
-import styles from '../../dashboard/dashboard.module.css';
+import styles from '../layout.module.css';
 import tableStyles from '../loads/loads.module.css';
 
 export default function DocumentsAuditPage() {

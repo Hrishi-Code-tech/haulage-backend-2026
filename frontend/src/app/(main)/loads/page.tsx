@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { mockLoads, OrderStatus } from '@/mock/mockData';
-import styles from '../../dashboard/dashboard.module.css'; // Adjust as needed
+import styles from '../layout.module.css'; // Adjust as needed
 import tableStyles from './loads.module.css';
 
 export default function LoadsPage() {

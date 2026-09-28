@@ -26,7 +26,7 @@ export default function LiveMapPage() {
           {/* Mock position based on the selected load, or default null */}
           <TelemetryMap
             order={selectedLoad as any}
-            position={selectedLoad && selectedLoad.lat && selectedLoad.lng ? { id: selectedLoad.id, lat: selectedLoad.lat, lng: selectedLoad.lng, speed: 60, heading: 90, timestamp: '' } : null}
+            position={selectedLoad && selectedLoad.lat && selectedLoad.lng ? { latitude: selectedLoad.lat, longitude: selectedLoad.lng, timestamp: new Date().toISOString() } : null}
             history={[]}
             isLoading={false}
           />

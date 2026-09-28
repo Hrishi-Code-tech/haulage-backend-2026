@@ -23,6 +23,7 @@ export function TelemetryMap({
   isLoading = false,
 }: TelemetryMapProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationRef = useRef<number>();
 
   useEffect(() => {
     if (!canvasRef.current || !position) return;
@@ -38,78 +39,99 @@ export function TelemetryMap({
     const width = canvas.width;
     const height = canvas.height;
 
-    // Clear canvas
-    ctx.fillStyle = 'rgba(10, 16, 23, 0.5)';
-    ctx.fillRect(0, 0, width, height);
+    let angle = 0;
 
-    // Draw grid
-    ctx.strokeStyle = 'rgba(245, 163, 58, 0.05)';
-    ctx.lineWidth = 1;
-    for (let i = 0; i <= 10; i++) {
+    const renderFrame = () => {
+      // Clear canvas with trail effect
+      ctx.fillStyle = 'rgba(10, 16, 23, 0.2)';
+      ctx.fillRect(0, 0, width, height);
+
+      // Draw grid
+      ctx.strokeStyle = 'rgba(245, 163, 58, 0.03)';
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 10; i++) {
+        ctx.beginPath();
+        ctx.moveTo((width / 10) * i, 0);
+        ctx.lineTo((width / 10) * i, height);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(0, (height / 10) * i);
+        ctx.lineTo(width, (height / 10) * i);
+        ctx.stroke();
+      }
+
+      // Draw Weather System (Storm Cell)
+      const gradient = ctx.createRadialGradient(width * 0.7, height * 0.4, 10, width * 0.7, height * 0.4, 150);
+      gradient.addColorStop(0, 'rgba(220, 38, 38, 0.15)'); // Red storm center
+      gradient.addColorStop(0.5, 'rgba(245, 158, 11, 0.05)'); // Amber edge
+      gradient.addColorStop(1, 'transparent');
+      ctx.fillStyle = gradient;
       ctx.beginPath();
-      ctx.moveTo((width / 10) * i, 0);
-      ctx.lineTo((width / 10) * i, height);
-      ctx.stroke();
+      ctx.arc(width * 0.7 + Math.sin(angle) * 10, height * 0.4 + Math.cos(angle) * 10, 150, 0, Math.PI * 2);
+      ctx.fill();
 
+      // Normalize coordinates to canvas
+      const normalizeCoord = (lat: number, lng: number) => {
+        const x = ((lng + 180) / 360) * width;
+        const y = ((90 - lat) / 180) * height;
+        return { x, y };
+      };
+
+      // Draw route history
+      if (history.length > 1) {
+        ctx.strokeStyle = 'rgba(245, 163, 58, 0.3)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+
+        history.forEach((point, index) => {
+          const { x, y } = normalizeCoord(point.latitude, point.longitude);
+          if (index === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
+        });
+        ctx.stroke();
+      }
+
+      // Draw current position as pulsing dot
+      const { x, y } = normalizeCoord(position.latitude, position.longitude);
+
+      // Radar Sweep Effect
+      angle += 0.03;
+      const radarGrad = ctx.createConicGradient(angle, x, y);
+      radarGrad.addColorStop(0, 'transparent');
+      radarGrad.addColorStop(0.8, 'transparent');
+      radarGrad.addColorStop(1, 'rgba(245, 163, 58, 0.4)');
+      
+      ctx.fillStyle = radarGrad;
       ctx.beginPath();
-      ctx.moveTo(0, (height / 10) * i);
-      ctx.lineTo(width, (height / 10) * i);
-      ctx.stroke();
-    }
+      ctx.moveTo(x, y);
+      ctx.arc(x, y, 100, angle, angle + Math.PI / 4);
+      ctx.lineTo(x, y);
+      ctx.fill();
 
-    // Normalize coordinates to canvas
-    const normalizeCoord = (lat: number, lng: number) => {
-      const x = ((lng + 180) / 360) * width;
-      const y = ((90 - lat) / 180) * height;
-      return { x, y };
+      // Outer pulse
+      ctx.fillStyle = `rgba(245, 163, 58, ${0.1 + Math.sin(angle * 3) * 0.05})`;
+      ctx.beginPath();
+      ctx.arc(x, y, 12, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Main dot
+      ctx.fillStyle = '#f5a33a';
+      ctx.beginPath();
+      ctx.arc(x, y, 6, 0, Math.PI * 2);
+      ctx.fill();
+
+      animationRef.current = requestAnimationFrame(renderFrame);
     };
 
-    // Draw route history as line
-    if (history.length > 1) {
-      ctx.strokeStyle = 'rgba(245, 163, 58, 0.3)';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
+    renderFrame();
 
-      history.forEach((point, index) => {
-        const { x, y } = normalizeCoord(point.latitude, point.longitude);
-        if (index === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
-        }
-      });
-      ctx.stroke();
-
-      // Draw history points
-      history.slice(1).forEach((point) => {
-        const { x, y } = normalizeCoord(point.latitude, point.longitude);
-        ctx.fillStyle = 'rgba(245, 163, 58, 0.2)';
-        ctx.beginPath();
-        ctx.arc(x, y, 4, 0, Math.PI * 2);
-        ctx.fill();
-      });
-    }
-
-    // Draw current position as pulsing dot
-    const { x, y } = normalizeCoord(position.latitude, position.longitude);
-
-    // Outer pulse
-    ctx.fillStyle = 'rgba(245, 163, 58, 0.1)';
-    ctx.beginPath();
-    ctx.arc(x, y, 12, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Main dot
-    ctx.fillStyle = '#f5a33a'; // amber color
-    ctx.beginPath();
-    ctx.arc(x, y, 6, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Highlight
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-    ctx.beginPath();
-    ctx.arc(x - 2, y - 2, 2, 0, Math.PI * 2);
-    ctx.fill();
+    return () => {
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+    };
   }, [position, history]);
 
   if (!order || !position) {

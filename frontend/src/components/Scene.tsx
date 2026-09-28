@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Box, Cylinder, Torus, Fog } from '@react-three/drei';
+import { Box, Cylinder, Torus } from '@react-three/drei';
 import * as THREE from 'three';
 
 const Wheel = ({ position, rotation, isLeft }: { position: [number, number, number], rotation?: [number, number, number], isLeft: boolean }) => {

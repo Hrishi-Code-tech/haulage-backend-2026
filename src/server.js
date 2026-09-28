@@ -30,7 +30,7 @@ const bootstrap = async () => {
   await connectRedis();
   setupWebSocket(server);
 
-  server.listen(ENV.PORT, () => {
+  server.listen(ENV.PORT, '0.0.0.0', () => {
     console.log(`API Gateway running on http://localhost:${ENV.PORT}`);
   });
 };

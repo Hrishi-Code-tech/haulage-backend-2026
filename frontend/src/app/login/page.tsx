@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/hooks/useAuth';
+import dynamic from 'next/dynamic';
+
+const TruckScene = dynamic(() => import('@/components/truck-scene'), { ssr: false });
 
 export default function Login() {
   const router = useRouter();
@@ -46,10 +49,7 @@ export default function Login() {
   return (
     <main className="auth-shell">
       <section className="hero-stage" aria-label="Haulage transport animation">
-        <div className="hero-orbs" aria-hidden="true">
-          <div className="hero-orb hero-orb-1"></div>
-          <div className="hero-orb hero-orb-2"></div>
-        </div>
+
         <div className="hero-copy">
           <Link className="brand" href="/" aria-label="Haulage home">
             <span className="brand-mark"><i></i><i></i><i></i></span>
@@ -67,14 +67,11 @@ export default function Login() {
           </div>
         </div>
         
-        {/* We can use the static scene fallback here to keep it simple and authentic to the original's static state while on the login page */}
-        <div className="scene-fallback" style={{ display: 'block' }} aria-hidden="true">
-          <div className="poster-sun"></div>
-          <div className="poster-road"></div>
-          <div className="poster-truck">
-            <span className="poster-cab"></span>
-            <span className="poster-trailer"><b>haulage</b></span>
-          </div>
+        {/* Dynamic 3D cinematic scene */}
+        <div className="scene-container" style={{ position: 'absolute', inset: 0, zIndex: 0 }} aria-hidden="true">
+          <TruckScene />
+          {/* Subtle gradient vignette to connect the 3D scene to the dark auth panel on the right */}
+          <div className="scene-vignette" style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'linear-gradient(to right, transparent 65%, var(--navy-deep) 100%, #0b1118 100%)', zIndex: 1 }}></div>
         </div>
         <div className="hero-grain"></div>
       </section>

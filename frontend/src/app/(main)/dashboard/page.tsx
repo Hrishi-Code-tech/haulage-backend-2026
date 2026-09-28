@@ -8,6 +8,9 @@ import { TelemetryMap } from '@/components/telemetry-map';
 import { ActionFeed } from '@/components/action-feed';
 import { OrderDetail } from '@/components/order-detail';
 import { motion } from 'framer-motion';
+import dynamic from 'next/dynamic';
+
+const DiagnosticScene = dynamic(() => import('@/components/diagnostic-scene').then(mod => mod.DiagnosticScene), { ssr: false });
 import { Truck, Scale, CircleDollarSign, CheckCircle2 } from 'lucide-react';
 import styles from '../layout.module.css';
 
@@ -77,6 +80,10 @@ export default function ControlTower() {
         </div>
 
         <div className={styles.rightPanel}>
+          <div style={{ height: '30vh', minHeight: '200px', background: 'var(--glass-bg)', borderRadius: 'var(--radius)', border: '1px solid var(--line)', marginBottom: '1.5rem', overflow: 'hidden', position: 'relative' }}>
+            <h3 style={{ position: 'absolute', top: '1rem', left: '1rem', zIndex: 10, margin: 0, fontSize: '0.85rem', color: '#a0aec0', letterSpacing: '0.05em' }}>FLEET DIAGNOSTICS</h3>
+            <DiagnosticScene />
+          </div>
           <ActionFeed />
         </div>
       </motion.div>

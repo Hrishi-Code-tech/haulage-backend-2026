@@ -5,7 +5,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation, animate } from 'framer-motion';
 import styles from './metrics-card.module.css';
 
 interface MetricsCardProps {
@@ -25,7 +25,22 @@ export function MetricsCard({
   trend,
   loading = false,
 }: MetricsCardProps) {
-  const finalValue = typeof value === 'string' ? value : `${value}${suffix}`;
+  const [displayValue, setDisplayValue] = useState(typeof value === 'number' ? 0 : value);
+
+  useEffect(() => {
+    if (typeof value === 'number') {
+      const controls = animate(0, value, {
+        duration: 1.5,
+        ease: "easeOut",
+        onUpdate: (v) => setDisplayValue(Math.round(v))
+      });
+      return controls.stop;
+    } else {
+      setDisplayValue(value);
+    }
+  }, [value]);
+
+  const finalValue = typeof value === 'number' ? `${displayValue}${suffix}` : displayValue;
 
   if (loading) {
     return (

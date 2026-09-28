@@ -5,8 +5,9 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { Sidebar } from '@/components/sidebar';
 import { DashboardHeader } from '@/components/dashboard-header';
+import { Copilot } from '@/components/copilot';
+import { GlobalTicker } from '@/components/global-ticker';
 import styles from './layout.module.css';
-
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { isAuthenticated, isLoading: authLoading } = useAuth();
@@ -41,6 +42,8 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
           </main>
         </div>
       </div>
+      <Copilot />
+      <GlobalTicker />
     </div>
   );
 }

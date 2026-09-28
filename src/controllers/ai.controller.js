@@ -167,3 +167,28 @@ export const getRagStatus = async (req, res) => {
   const result = await callAiService('/rag/status', 'GET');
   res.status(200).json(new ApiResponse(200, 'RAG status retrieved', result));
 };
+
+const emailIngestSchema = z.object({
+  email_text: z.string().min(5, 'email_text must be at least 5 characters'),
+});
+
+/**
+ * Parse an unstructured dispatch email into deterministic structured load JSON
+ * POST /api/ai/ingest-email
+ */
+export const ingestEmailAi = async (req, res) => {
+  const parsed = emailIngestSchema.safeParse(req.body);
+  if (!parsed.success) {
+    throw new ApiError(400, 'Invalid email ingestion payload', parsed.error.issues);
+  }
+
+  const result = await callAiService('/ingest/email', 'POST', {
+    email_text: parsed.data.email_text,
+  });
+
+  res.status(200).json({
+    success: true,
+    load: result.load,
+    raw_email_snippet: result.raw_email_snippet,
+  });
+};
